@@ -8,14 +8,14 @@ module.exports = {
       chainId: 1337
     },
    
-    mumbai: {
-      url: [process.env.ALCHEMY_RPC], 
+    testnet: {
+      url: `https://api.hyperspace.node.glif.io/rpc/v1`, 
       accounts: [process.env.PRIVATE_KEY],
     },
 
   },
   solidity: {
-    version: "0.8.9",
+    version: "0.8.17",
     settings: {
       optimizer: {
         enabled: true,

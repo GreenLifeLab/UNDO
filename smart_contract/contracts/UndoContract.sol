@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.17;
 
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -7,7 +7,7 @@ import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 import "../node_modules/hardhat/console.sol";
 
-contract Waste is ERC721URIStorage {
+contract UndoForest is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     Counters.Counter private  _itemsRecycled;
@@ -81,7 +81,7 @@ contract Waste is ERC721URIStorage {
       idToMarketItem[tokenId].recycled = true;
       idToMarketItem[tokenId].seller = payable(address(0));
       _itemsRecycled.increment();
-      _transfer(address(this), msg.sender, tokenId);
+      //_transfer(address(this), msg.sender, tokenId);
       payable(seller).transfer(msg.value);
     }
     
@@ -152,4 +152,6 @@ contract Waste is ERC721URIStorage {
       }
       return items;
     }
+
+ 
 }

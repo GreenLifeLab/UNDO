@@ -6,8 +6,8 @@ import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 import Web3Modal from "web3modal";
 
-import Waste from "../utils/Waste.json";
-import { wastemarketplaceAddress } from "../../config";
+import Waste from "../utils/UndoForest.json";
+import { UndoContractAddress } from "../../config";
 
 export default function Sender() {
 //  const navigate = useNavigate();
@@ -23,13 +23,13 @@ export default function Sender() {
     return ipfsGateWayURL;
   };
 
-  // const rpcUrl = "https://matic-mumbai.chainstacklabs.com";
+  const rpcUrl = "https://api.hyperspace.node.glif.io/rpc/v1";
   // const rpcUrl = "http://localhost:8545";
 
   async function loadWaste() {
     /* create a generic provider and query for Wastes */
-    const provider = new ethers.providers.JsonRpcProvider("https://matic-mumbai.chainstacklabs.com");
-    const contract = new ethers.Contract(wastemarketplaceAddress, Waste.abi, provider);
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+    const contract = new ethers.Contract(UndoContractAddress, Waste.abi, provider);
     const data = await contract.fetchMarketItems();
     console.log("Waste data fetched from contract", data);
     /*
@@ -68,7 +68,7 @@ export default function Sender() {
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
-    const contract = new ethers.Contract(wastemarketplaceAddress, Waste.abi, signer);
+    const contract = new ethers.Contract(UndoContractAddress, Waste.abi, signer);
 
     /* user will be prompted to pay the asking proces to complete the transaction */
     const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
@@ -83,7 +83,7 @@ export default function Sender() {
   if (loadingState === "loaded" && !nfts.length) {
     return (
       <div>
-        <h1 className="px-20 py-10 text-3xl">No Entries yet</h1>
+        <h1 className="px-20 py-10 text-3xl text-white">No Entries yet</h1>
       </div>
     );
   }
@@ -105,20 +105,20 @@ export default function Sender() {
                 className="py-3 object-fill h-500"
               />
               <div className="p-1">
-                <p style={{ height: "34px" }} className="text-xl text-green-400 font-semibold">Category: {nft.name}</p>
-                <div style={{ height: "40px", overflow: "hidden" }}>
-                  <p className="text-gray-700">Description: {nft.description}</p>
+                <p style={{ height: "34px" }} className="text-xl text-green-300 font-semibold">Category: {nft.name}</p>
+                <div style={{ height: "80px", overflow: "hidden" }}>
+                  <p className="text-gray-200">Description: {nft.description}</p>
                 </div>
                 <p style={{ height: "34px" }} className="text-xl font-semibold">Country : {nft.country}</p>
                 <div style={{ height: "40px", overflow: "hidden" }}>
-                  <p className="text-gray-700">Collection Point: {nft.collectionPoint}</p>
+                  <p className="text-gray-700">Location: {nft.collectionPoint}</p>
                 </div>
-                <p className="text-xl font-bold text-white"> Weight(Kg): {nft.weight}</p>
-                <p className="text-xl font-bold text-black">Price : {nft.price} MATIC</p>
+                <p className="text-xl font-bold text-white"> Impact: {nft.weight}</p>
+                <p className="text-xl font-bold text-black">Donate : {nft.price} FIL</p>
               </div>
 
               <div className="p-2 bg-black">
-                <button type="button" className="mt-4 w-full bg-green-500 text-white font-bold py-2 px-12 rounded" onClick={() => recycle(nft)}>Recycle</button>
+                <button type="button" className="mt-4 w-full bg-green-500 text-white font-bold py-2 px-12 rounded" onClick={() => recycle(nft)}>Contribute</button>
               </div>
             </div>
           ))}

@@ -7,16 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import Waste from "../utils/Waste.json";
-import { wastemarketplaceAddress } from "../../config";
+import { UndoContractAddress } from "../../config";
 
 // eslint-disable-next-line max-len
 const APIKEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDA4Zjc4ODAwMkUzZDAwNEIxMDI3NTFGMUQ0OTJlNmI1NjNFODE3NmMiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1MzA1NjE4NzM4MCwibmFtZSI6InBlbnNpb25maSJ9.agI-2V-FeK_eVRAZ-T6KGGfE9ltWrTUQ7brFzzYVwdM";
-
-/** rewrite ipfs:// uri to dweb.link gateway URLs
-function makeGatewayURL(ipfsURI) {
-  return ipfsURI.replace(/^ipfs:\/\//, "https://dweb.link/ipfs/");
-}
- */
 
 const MintWaste = () => {
   const navigate = useNavigate();
@@ -72,8 +66,8 @@ const MintWaste = () => {
       const provider = new ethers.providers.Web3Provider(connection);
 
       const price = ethers.utils.parseUnits(formInput.price, "ether");
-      const connectedContract = new ethers.Contract(wastemarketplaceAddress, Waste.abi, provider.getSigner());
-      console.log("Connected to contract", wastemarketplaceAddress);
+      const connectedContract = new ethers.Contract(UndoContractAddress, Waste.abi, provider.getSigner());
+      console.log("Connected to contract", UndoContractAddress);
       console.log("IPFS blockchain uri is ", metadata.url);
 
       const mintNFTTx = await connectedContract.createToken(metadata.url, price);
@@ -122,7 +116,7 @@ const MintWaste = () => {
   return (
     <>
       <div className="text-4xl text-center text-white font-bold mt-10">
-        <h1> Register a waste</h1>
+        <h1> Create a new Project</h1>
       </div>
       <div className="flex justify-center">
         <div className="w-1/2 flex flex-col pb-12 ">
@@ -130,20 +124,17 @@ const MintWaste = () => {
             className="mt-5 border rounded p-4 text-xl"
             // value={this.state.value}
             onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
-          ><option value="select">Click to select type of waste</option>
-            <option value="plastic">Plastic</option>
-            <option value="paper">Paper</option>
-            <option value="glass">Glass</option>
-            <option value="electronics">Electronics</option>
-            <option value="metals">Metals</option>
-            <option value="batteries">Batteries</option>
-            <option value="tyres">Tyres</option>
-            <option value="clothing">Clothing</option>
-            <option value="organic">Organic Materials</option>
-            <option value="medical">Medical Waste</option>
+          ><option value="select">Click to select type of project</option>
+            <option value="water">1. Clean Portable Water</option>
+            <option value="solar">2. Renewal Solar Energy</option>
+            <option value="reforestation">3. Reforestation / Afforestration</option>
+            <option value="logging">4. Alternative to Timber or Logging for roofing</option>
+            <option value="agriculture">5. Sustainable agriculture:</option>
+            <option value="corporate">6. Corporate responsibility:</option>
+            <option value="education">7. Education and awareness:</option>
           </select>
           <textarea
-            placeholder="Description of waste"
+            placeholder="Brief Description of Project"
             className="mt-5 border rounded p-4 text-xl"
             onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
             rows={2}
@@ -154,17 +145,17 @@ const MintWaste = () => {
             onChange={(e) => updateFormInput({ ...formInput, country: e.target.value })}
           />
           <input
-            placeholder="Enter Address of Collecetion Point"
+            placeholder="Enter Address / Location"
             className="mt-5 border rounded p-4 text-xl"
             onChange={(e) => updateFormInput({ ...formInput, collectionPoint: e.target.value })}
           />
           <input
-            placeholder="Weight in Kg"
+            placeholder="Impact of Project"
             className="mt-5 border rounded p-4 text-xl"
             onChange={(e) => updateFormInput({ ...formInput, weight: e.target.value })}
           />
           <input
-            placeholder="Price in Matic, if free put 0"
+            placeholder="Total Project Amount (in FIL)"
             className="mt-5 border rounded p-4 text-xl"
             onChange={(e) => updateFormInput({ ...formInput, price: e.target.value })}
           />
@@ -172,7 +163,7 @@ const MintWaste = () => {
 
           <div className="MintNFT text-white text-xl">
             <form>
-              <h3>Select a picture of the waste</h3>
+              <h3>Select a picture of project / Budget</h3>
               <input type="file" onChange={handleFileUpload} className="mt-5 border rounded p-4 text-xl" />
             </form>
             {txStatus && <p>{txStatus}</p>}
@@ -187,7 +178,7 @@ const MintWaste = () => {
             {imageView && (
             <iframe
               className="mb-10"
-              title="Ebook "
+              title="Project "
               src={imageView}
               alt="NFT preview"
               frameBorder="0"
@@ -200,7 +191,7 @@ const MintWaste = () => {
           </div>
 
           <button type="button" onClick={(e) => mintNFTToken(e, uploadedFile)} className="font-bold mt-20 bg-green-500 text-white text-2xl rounded p-4 shadow-lg">
-            Register Item
+            Create Project
           </button>
         </div>
       </div>

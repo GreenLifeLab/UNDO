@@ -19,7 +19,7 @@ const Navbar = () => {
       <ul className="text-white lg:text-3xl md:flex hidden  items-center flex-initial">
         <Link to="/">Home</Link>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-        <Link to="/create">Create-waste</Link>
+        <Link to="/create">Create-Project</Link>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
         <Link to="/explore">Explore</Link>
         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
