@@ -102,7 +102,7 @@ const MintWaste = () => {
     // 3. preview the minted nft
     previewNFT(metaData, mintNFTTx);
 
-    navigate("/explore");
+    navigate("/winner");
   };
 
   const getIPFSGatewayURL = (ipfsURL) => {
